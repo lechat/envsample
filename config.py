@@ -23,11 +23,13 @@ def conf(env_name):
 
     with Project(env, 'SampleProject', [g_dev, g_prod]) as project:
         
-        with CloudServers(g_prod=4) as cloud_servers:
+        # CloudServers need to be a multiconf builder
+        with CloudServers(host_name='something', g_prod=4) as cloud_servers:
             cloud_servers.setattr('num_servers', devlocal=0, dev=0, cloud=2)
 
         with Jenkins(g_prod=0) as jenkins:
             jenkins.setattr('base_port', g_dev=8080)
+            # Nodes is a builder too
             with Nodes(g_prod=4, cloud_servers) as jenkins_nodes:
                 jenkins_nodes.setattr('num_nodes', devlocal=1, dev=1, cloud=2)
             with NestedView(project.name) as top_view:
