@@ -1,5 +1,17 @@
 from multiconf.envs import EnvFactory
+from multiconf import ConfigRoot, ConfigItem, ConfigBuilder
+from multiconf.decorators import nested_repeatables, repeat, required
 
+@nested_repeatables('cloud_servers')
+class Project(ConfigRoot):
+    def __init__(self, selected_env, valid_envs, **attr):
+        super(Project, self).__init__(selected_env, valid_envs, **attr)
+        
+    def render(self):
+        # for all items within config:
+        # collect result of their own render() function
+        pass
+    
 # Define environments
 
 # Use EnvFactory() to create environment or group of environments
@@ -45,3 +57,7 @@ def conf(env_name):
             db.seattr('name', g_dev='%s_dev_db' % project.name)
 
     return project   
+
+# This is Salt renderer's call
+def render(template_file, env='', sls='', argline='', context=None, **kws):
+    return conf(env).render()
