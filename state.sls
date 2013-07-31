@@ -1,3 +1,5 @@
+#!multiconf
+
 from multiconf.envs import EnvFactory
 from multiconf import ConfigRoot, ConfigItem, ConfigBuilder
 from multiconf.decorators import nested_repeatables, repeat, required
@@ -58,6 +60,3 @@ def conf(env_name):
 
     return project   
 
-# This is Salt renderer's call
-def render(template_file, env='', sls='', argline='', context=None, **kws):
-    return conf(env).render()
