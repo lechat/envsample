@@ -42,4 +42,4 @@ def conf(env_name):
         with Database('%s_db' % project.name) as db:
             db.seattr('name', g_dev='%s_dev_db' % project.name)
 
-    e   
+    return project   
