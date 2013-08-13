@@ -30,8 +30,8 @@ class CloudServers(ConfigBuilder):
     This is builder - it will insert into config multiple objects
     if type CloudServer and will calculate hostname for each
     '''
-    def __init__(self, host_name, num_servers):
-        super(CloudServers, self).__init__(host_name=host_name,
+    def __init__(self, base_host_name, num_servers):
+        super(CloudServers, self).__init__(host_name=base_host_name,
                                            num_servers=num_servers)
 
     def build(self):
@@ -116,7 +116,7 @@ def conf(env_name):
         # CloudServers is a multiconf builder - it will not be present in
         # configuration. Instead there will be CloudServer objects based on
         # num_servers parameter
-        with CloudServers(host_name='something', num_servers=0) as cloud_servers:
+        with CloudServers(base_host_name='something', num_servers=0) as cloud_servers:
             cloud_servers.setattr('num_servers', devlocal=1, dev=2, cloud=4)
 
         # GitRepo is set to be a required element of a project
